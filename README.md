@@ -1,2 +1,2 @@
 # SwiftUILayouts
-Pwoers Layout
+Powers Layout
