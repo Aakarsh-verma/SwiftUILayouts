@@ -19,7 +19,7 @@ public struct ImageModel: Identifiable {
 public struct CustomImageView: View {
     public var imageModel: CustomImageModel
     
-    var body: some View {
+    public var body: some View {
         if imageModel.isAssetImage {
             Image(imageModel.image)
                 .resizable()
