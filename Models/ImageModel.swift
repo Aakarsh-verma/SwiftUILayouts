@@ -16,8 +16,8 @@ public struct ImageModel: Identifiable {
     }
 }
 
-struct CustomImageView: View {
-    var imageModel: CustomImageModel
+public struct CustomImageView: View {
+    public var imageModel: CustomImageModel
     
     var body: some View {
         if imageModel.isAssetImage {
@@ -30,19 +30,19 @@ struct CustomImageView: View {
     }
 }
 
-struct CustomImageModel: Identifiable, Hashable, Encodable, Decodable {
-    var id: UUID = UUID()
-    var image: String
+public struct CustomImageModel: Identifiable, Hashable, Encodable, Decodable {
+    public var id: UUID = UUID()
+    public var image: String
     
 //    var isRemoteImage: Bool {
 //        return image.hasPrefix("http") || image.hasPrefix("https")
 //    }
     
-    var isAssetImage: Bool {
+    public var isAssetImage: Bool {
         return UIImage(named: image) != nil
     }
     
-    init(for image: String) {
+    public init(for image: String) {
         self.image = image
     }
 }
