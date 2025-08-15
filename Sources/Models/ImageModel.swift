@@ -17,14 +17,14 @@ public struct ImageModel: Identifiable {
 }
 
 @available(iOS 15.0, *)
-struct CustomImageView: View {
+public struct CustomImageView: View {
     public var imageModel: CustomImageModel
     
     public init(_ imageModel: CustomImageModel) {
         self.imageModel = imageModel
     }
     
-    var body: some View {
+    public var body: some View {
         if imageModel.isAssetImage {
             Image(imageModel.image)
                 .resizable()
