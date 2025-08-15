@@ -6,13 +6,23 @@
 //
 
 import SwiftUI
+import Kingfisher
 
-public struct ImageModel: Identifiable {
-    public var id: UUID = UUID()
-    public var image: String
+@available(iOS 13.0, *)
+public protocol CustomImageModel {
+    var id: UUID { get }
+    var image: String { get }
+    var placeHolderImage: String? { get }
+}
+
+@available(iOS 13.0, *)
+extension CustomImageModel {
+    public var isRemoteImage: Bool {
+        return image.hasPrefix("http") || image.hasPrefix("https")
+    }
     
-    public init(image: String) {
-        self.image = image
+    public var isAssetImage: Bool {
+        return UIImage(named: image) != nil
     }
 }
 
@@ -25,7 +35,18 @@ public struct CustomImageView: View {
     }
     
     public var body: some View {
-        if imageModel.isAssetImage {
+        if imageModel.isRemoteImage {
+            KFImage(URL(string: imageModel.image)!)
+                .placeholder {
+                    if let placeholderImage = imageModel.placeHolderImage {
+                        Image(placeholderImage)
+                    } else {
+                        Image(systemName: "photo.fill")
+                            .foregroundColor(.gray)
+                    }
+                }
+                .resizable()
+        } else if imageModel.isAssetImage {
             Image(imageModel.image)
                 .resizable()
         } else {
@@ -35,19 +56,19 @@ public struct CustomImageView: View {
     }
 }
 
-public struct CustomImageModel: Identifiable, Hashable, Encodable, Decodable {
-    public var id: UUID = UUID()
-    public var image: String
-    
+//public struct CustomImageModel: Identifiable, Hashable, Encodable, Decodable {
+//    public var id: UUID = UUID()
+//    public var image: String
+//    
 //    var isRemoteImage: Bool {
 //        return image.hasPrefix("http") || image.hasPrefix("https")
 //    }
-    
-    public var isAssetImage: Bool {
-        return UIImage(named: image) != nil
-    }
-    
-    public init(for image: String) {
-        self.image = image
-    }
-}
+//    
+//    public var isAssetImage: Bool {
+//        return UIImage(named: image) != nil
+//    }
+//    
+//    public init(for image: String) {
+//        self.image = image
+//    }
+//}
