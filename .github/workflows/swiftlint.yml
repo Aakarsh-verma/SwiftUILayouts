@@ -1,0 +1,22 @@
+name: SwiftLint
+
+on:
+  pull_request:
+    branches: [ master, develop ]
+
+permissions:
+  contents: read
+  pull-requests: write   # needed for inline PR annotations
+
+jobs:
+  lint:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Run SwiftLint and annotate directly in the PR
+      - name: SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
+        with:
+          args: --quiet
