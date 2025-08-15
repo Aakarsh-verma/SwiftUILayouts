@@ -22,32 +22,25 @@ public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View wh
     /// The source collection of items to be displayed in the grid.
     /// Must be a `RandomAccessCollection` whose elements are `Identifiable`.
     public let items: Data
-    
     /// The base container width used to derive individual item width.
     /// Defaults to the device screen width if not provided.
-    let containerSize: CGFloat
-    
+    let containerSize: CGFloat    
     /// The fraction of `containerSize` used as the item width.
     /// Example: `0.45` means each item is `45%` of the container width.
     let itemSizeRatio: CGFloat
-    
     /// The underlying grid specification used by `LazyVGrid`/`LazyHGrid`.
     /// Built from `numberOfLayout` as an array of `.flexible()` grid items.
     let layout: [GridItem]
-    
     /// Controls grid orientation.
     /// - `true`: Uses `LazyVGrid` (vertical scrolling).
     /// - `false`: Uses `LazyHGrid` within a horizontal `ScrollView`.
     let isVertical: Bool 
-    
     /// A builder closure that produces the view for a given item.
     /// Called for each element in `items` to render cell content.
     public var content: (Data.Element) -> Content
-    
     /// Optional tap handler receiving the tapped item.
     /// Called for each element in `items` to handle cell's tap action.
     public var action: ((Data.Element) -> Void)?
-    
     /// Creates an `SLGridLayout`.
     /// - Parameters:
     ///   - items: The collection of items to render.
@@ -81,12 +74,12 @@ public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View wh
             
             if isVertical {
                 LazyVGrid(columns: layout, spacing: 12) { 
-                    GridLayout(cardWidth: cardWidth)                
+                    gridLayout(cardWidth: cardWidth)                
                 }
             } else {
-                ScrollView(.horizontal ,showsIndicators: false) {
+                ScrollView(.horizontal, showsIndicators: false) {
                     LazyHGrid(rows: layout, spacing: 12) { 
-                        GridLayout(cardWidth: cardWidth)
+                        gridLayout(cardWidth: cardWidth)
                     }
                 }
             }
@@ -97,9 +90,9 @@ public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View wh
     /// Builds the internal grid content using `ForEach` with stable `id`s.
     /// - Parameter cardWidth: The computed width applied to each item.
     @ViewBuilder 
-    private func GridLayout(cardWidth: CGFloat) -> some View {
+    private func gridLayout(cardWidth: CGFloat) -> some View {
         ForEach(Array(items.enumerated()), id: \.1.id) { index, item in
-            ItemView(item, for: index, with: cardWidth)
+            itemView(item, for: index, with: cardWidth)
         }
     }
     
@@ -109,7 +102,7 @@ public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View wh
     ///   - index: The position of the item in the collection.
     ///   - cardWidth: The width applied to the item's view.
     @ViewBuilder
-    private func ItemView(_ item: Data.Element, for index: Int, with cardWidth: CGFloat) -> some View {
+    private func itemView(_ item: Data.Element, for index: Int, with cardWidth: CGFloat) -> some View {
         content(item)
             .frame(width: cardWidth)            
             .onTapGesture {
