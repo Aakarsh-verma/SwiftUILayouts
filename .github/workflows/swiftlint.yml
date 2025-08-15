@@ -7,6 +7,10 @@ on:
       - '.swiftlint.yml'
       - '**/*.swift'
 
+permissions:
+  contents: read
+  pull-requests: write
+  
 jobs:
   SwiftLint:
     runs-on: ubuntu-latest
