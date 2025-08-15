@@ -2,21 +2,24 @@ name: SwiftLint
 
 on:
   pull_request:
-    branches: [ master, develop ]
-
-permissions:
-  contents: read
-  pull-requests: write   # needed for inline PR annotations
+    branches: [ master ]
 
 jobs:
-  lint:
-    runs-on: macos-latest
-
+  SwiftLint:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      # Run SwiftLint and annotate directly in the PR
-      - name: SwiftLint
+      - uses: actions/checkout@v1
+      - name: GitHub Action for SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
+      - name: GitHub Action for SwiftLint with --strict
         uses: norio-nomura/action-swiftlint@3.2.1
         with:
-          args: --quiet
+          args: --strict
+      - name: GitHub Action for SwiftLint (Only files changed in the PR)
+        uses: norio-nomura/action-swiftlint@3.2.1
+        env:
+          DIFF_BASE: ${{ github.base_ref }}
+      - name: GitHub Action for SwiftLint (Different working directory)
+        uses: norio-nomura/action-swiftlint@3.2.1
+        env:
+          WORKING_DIRECTORY: Source
