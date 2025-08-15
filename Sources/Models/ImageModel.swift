@@ -9,14 +9,14 @@ import SwiftUI
 import Kingfisher
 
 @available(iOS 13.0, *)
-public protocol CustomImageModel {
+public protocol SLImageModel {
     var id: UUID { get }
     var image: String { get }
     var placeHolderImage: String? { get }
 }
 
 @available(iOS 13.0, *)
-extension CustomImageModel {
+extension SLImageModel {
     public var isRemoteImage: Bool {
         return image.hasPrefix("http") || image.hasPrefix("https")
     }
@@ -27,10 +27,10 @@ extension CustomImageModel {
 }
 
 @available(iOS 15.0, *)
-public struct CustomImageView: View {
-    public var imageModel: CustomImageModel
+public struct SLImageView: View {
+    public var imageModel: SLImageModel
     
-    public init(_ imageModel: CustomImageModel) {
+    public init(_ imageModel: SLImageModel) {
         self.imageModel = imageModel
     }
     
@@ -55,20 +55,3 @@ public struct CustomImageView: View {
         }
     }
 }
-
-//public struct CustomImageModel: Identifiable, Hashable, Encodable, Decodable {
-//    public var id: UUID = UUID()
-//    public var image: String
-//    
-//    var isRemoteImage: Bool {
-//        return image.hasPrefix("http") || image.hasPrefix("https")
-//    }
-//    
-//    public var isAssetImage: Bool {
-//        return UIImage(named: image) != nil
-//    }
-//    
-//    public init(for image: String) {
-//        self.image = image
-//    }
-//}
