@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct ImageModel: Identifiable {
-    var id: UUID = UUID()
+    public var id: UUID = UUID()
     public var image: String
     
     public init(image: String) {
@@ -16,6 +16,7 @@ public struct ImageModel: Identifiable {
     }
 }
 
+@available(iOS 15.0, *)
 public struct CustomImageView: View {
     public var imageModel: CustomImageModel
     
