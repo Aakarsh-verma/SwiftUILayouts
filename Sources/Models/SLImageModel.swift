@@ -1,5 +1,5 @@
 //
-//  ImageModel.swift
+//  SLImageModel.swift
 //  LayoutsSample
 //
 //  Created by Aakarsh Verma on 14/08/25.
