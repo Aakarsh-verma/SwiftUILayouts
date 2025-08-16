@@ -16,7 +16,7 @@ import SwiftUI
 ///   - `Data`: A `RandomAccessCollection` of identifiable items.
 ///   - `Content`: The SwiftUI view generated for each item via `content`.
 @available(iOS 15.0, *)
-struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
+public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
     /// The data source for the carousel, rendered in stacking order.
     public let items: Data
     /// Visual and interaction configuration for widths, spacing, scaling, and visibility.
@@ -32,7 +32,7 @@ struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>: View 
     
     /// Lays out the stacked carousel within a `GeometryReader`, computing `cardWidth`
     /// from the container width and `config.cardWidthRatio`. Adds a drag gesture to page between cards.
-    var body: some View {
+    public var body: some View {
         GeometryReader { proxy in
             let cardWidth: CGFloat = proxy.size.width * config.cardWidthRatio
 
