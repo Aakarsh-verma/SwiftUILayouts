@@ -18,20 +18,37 @@ import SwiftUI
 @available(iOS 15.0, *)
 public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
     /// The data source for the carousel, rendered in stacking order.
-    public let items: Data
+    let items: Data
     /// Visual and interaction configuration for widths, spacing, scaling, and visibility.
-    public let config: SLStackCarouselModel
+    let config: SLStackCarouselModel
     /// The index of the currently centered (selected) card.
     /// Updates as the user swipes or taps other cards.
-    @Binding public var currentIndex: Int
+    @Binding var currentIndex: Int
     /// Builder that produces the view for each item.
-    public let content: (Data.Element) -> Content
+    let content: (Data.Element) -> Content
     /// Callback executed when the currently selected card is tapped.
     /// If a non-selected card is tapped, the carousel first animates towards it instead of firing this action.
-    public let action: (Data.Element) -> Void
+    let action: ((Data.Element) -> Void)?
     
-    /// Lays out the stacked carousel within a `GeometryReader`, computing `cardWidth`
-    /// from the container width and `config.cardWidthRatio`. Adds a drag gesture to page between cards.
+    /// Creates an `SLStackCarouselLayout`.
+    /// - Parameters:
+    ///   - items: The collection of items to render.
+    ///   - config: The visual configuration based on `SLStackCarouselModel` protocol for Layout's UI
+    ///   - currentIndex: index of the item which is in focus then maintains bind to track the same
+    ///   - content: A closure that builds the view for each item.
+    ///   - action: Optional tap handler receiving the tapped item.
+    public init(items: Data, 
+         config: SLStackCarouselModel, 
+         currentIndex: Binding<Int>, 
+         content: @escaping (Data.Element) -> Content,
+         action: ((Data.Element) -> Void)? = nil) {
+        self.items = items
+        self.config = config
+        self._currentIndex = currentIndex
+        self.content = content
+        self.action = action
+    }
+    
     public var body: some View {
         GeometryReader { proxy in
             let cardWidth: CGFloat = proxy.size.width * config.cardWidthRatio
@@ -104,7 +121,7 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
         if index != currentIndex {
             currentIndex += index > currentIndex ? 1 : -1
         } else {
-            action(item)
+            action?(item)
         }
     }
 }
