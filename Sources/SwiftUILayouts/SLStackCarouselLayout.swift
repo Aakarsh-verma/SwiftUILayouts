@@ -20,7 +20,7 @@ struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>: View 
     /// The data source for the carousel, rendered in stacking order.
     public let items: Data
     /// Visual and interaction configuration for widths, spacing, scaling, and visibility.
-    public let config: StackCarouselConfigModel
+    public let config: SLStackCarouselModel
     /// The index of the currently centered (selected) card.
     /// Updates as the user swipes or taps other cards.
     @Binding public var currentIndex: Int

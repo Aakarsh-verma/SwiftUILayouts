@@ -10,7 +10,7 @@ import SwiftUI
 /// A configuration protocol for `SLStackCarouselLayout`.
 /// Defines how cards are sized, spaced, layered, and whether selection is highlighted.
 /// Conform to this protocol to tune the visual behavior of the stacked carousel.
-public protocol StackCarouselConfigModel {
+public protocol SLStackCarouselModel {
     /// Portion of the container width used for each card's width.
     /// Example: `0.75` means each card is 75% of the available width.
     var cardWidthRatio: CGFloat { get }
@@ -33,7 +33,7 @@ public protocol StackCarouselConfigModel {
 
 /// Default helper methods for `StackCarouselConfigModel`.
 /// Provides computed presentation properties for a card based on its offset from the current index.
-extension StackCarouselConfigModel {
+extension SLStackCarouselModel {
     /// Computes visual properties for a card in the stack given its distance from the selected card.
     /// - Parameters:
     ///   - offsetFromCurrent: Relative index distance from the currently selected card (0 for selected, negative for left, positive for right).
