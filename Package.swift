@@ -10,7 +10,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "SwiftUILayouts",
-            targets: ["SwiftUILayouts"]),
+            targets: ["SwiftUILayouts"])
     ],
     dependencies: [
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.0.0")
@@ -25,6 +25,6 @@ let package = Package(
         .testTarget(
             name: "SwiftUILayoutsTests",
             dependencies: ["SwiftUILayouts"]
-        ),
+        )
     ]
 )

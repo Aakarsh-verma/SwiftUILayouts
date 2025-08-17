@@ -47,12 +47,30 @@ extension SLStackCarouselModel {
     ///   - xOffset: Horizontal offset computed as `offset * cardOffsetDifference`.
     ///   - zIndex: The stacking order (higher values appear above lower ones).
     ///   - opacity: `1` if within `visibleCardIndexDifference`, else `0`.
-    func getItemsProps(_ offsetFromCurrent: Int, totalItems: Int) -> (scale: CGFloat, xOffset: CGFloat, zIndex: Double, opacity: Double) {
+    func getItemsProps(_ offsetFromCurrent: Int, totalItems: Int) -> SLStackCarouselProps {
         let scale = offsetFromCurrent == 0 ? 1 : (1 - Double(abs(offsetFromCurrent)) * cardSizeDifferenceRatio)
         let xOffset = CGFloat(offsetFromCurrent) * cardOffsetDifference
         let zIndex = Double(totalItems - abs(offsetFromCurrent))
         let opacity = abs(offsetFromCurrent) <= Int(visibleCardIndexDifference) ? 1.0 : 0.0
-        return (scale, xOffset, zIndex, opacity)
+        return SLStackCarouselProps(scale, xOffset, zIndex, opacity)
+    }
+}
+
+
+internal struct SLStackCarouselProps {
+    let scale: CGFloat
+    let xOffset: CGFloat
+    let zIndex: Double
+    let opacity: CGFloat
+    
+    init(_ scale: CGFloat, 
+         _ xOffset: CGFloat, 
+         _ zIndex: Double, 
+         _ opacity: CGFloat) {
+        self.scale = scale
+        self.xOffset = xOffset
+        self.zIndex = zIndex
+        self.opacity = opacity
     }
 }
 

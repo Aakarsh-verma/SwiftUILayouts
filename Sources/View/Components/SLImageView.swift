@@ -18,13 +18,11 @@ import Kingfisher
 public struct SLImageView: View {
     /// The image model containing information about the image source and optional placeholder.
     public var imageModel: SLImageModel
-    
     /// Initializes the view with an image model.
     /// - Parameter imageModel: The model representing the image to display.
     public init(_ imageModel: SLImageModel) {
         self.imageModel = imageModel
     }
-    
     /// The body of the view. Dynamically selects the rendering method:
     /// - Uses `KFImage` for remote URLs with a placeholder if provided.
     /// - Uses `Image` for local asset images.

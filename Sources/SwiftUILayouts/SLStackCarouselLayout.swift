@@ -28,7 +28,6 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
     /// Callback executed when the currently selected card is tapped.
     /// If a non-selected card is tapped, the carousel first animates towards it instead of firing this action.
     let action: ((Data.Element) -> Void)?
-    
     /// Creates an `SLStackCarouselLayout`.
     /// - Parameters:
     ///   - items: The collection of items to render.
@@ -37,10 +36,10 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
     ///   - content: A closure that builds the view for each item.
     ///   - action: Optional tap handler receiving the tapped item.
     public init(items: Data, 
-         config: SLStackCarouselModel, 
-         currentIndex: Binding<Int>, 
-         content: @escaping (Data.Element) -> Content,
-         action: ((Data.Element) -> Void)? = nil) {
+                config: SLStackCarouselModel, 
+                currentIndex: Binding<Int>, 
+                content: @escaping (Data.Element) -> Content,
+                action: ((Data.Element) -> Void)? = nil) {
         self.items = items
         self.config = config
         self._currentIndex = currentIndex
@@ -55,7 +54,7 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
             VStack {
                 ZStack {
                     ForEach(Array(items.enumerated()), id: \.1.id) { index, item in
-                        ItemView(item, for: index, with: cardWidth)
+                        itemView(item, for: index, with: cardWidth)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -75,19 +74,16 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
     ///   - index: The card's index in `items`.
     ///   - cardWidth: The computed width for the card.
     @ViewBuilder
-    private func ItemView(_ item: Data.Element, for index: Int, with cardWidth: CGFloat) -> some View {
+    private func itemView(_ item: Data.Element, for index: Int, with cardWidth: CGFloat) -> some View {
         let offsetFromCurrent = index - currentIndex
-        
-        let scale = offsetFromCurrent == 0 ? 1 : (1 - Double(abs(offsetFromCurrent)) * config.cardSizeDifferenceRatio)
-        let xOffset = CGFloat(offsetFromCurrent) * config.cardOffsetDifference
-        let zIndex = Double(items.count - abs(offsetFromCurrent))
+        let props = config.getItemsProps(offsetFromCurrent, totalItems: items.count)
         
         content(item)
             .frame(width: cardWidth)
-            .scaleEffect(scale)
-            .offset(x: xOffset)
-            .zIndex(zIndex)
-            .opacity(abs(offsetFromCurrent) <= Int(config.visibleCardIndexDifference) ? 1 : 0)
+            .scaleEffect(props.scale)
+            .offset(x: props.xOffset)
+            .zIndex(props.zIndex)
+            .opacity(props.opacity)
             .transition(.opacity)
             .animation(.linear, value: currentIndex)
             .onTapGesture {
@@ -112,7 +108,8 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
         }
     }
     
-    /// Handles taps: if tapping a non-selected card, move selection by one toward it; if tapping the selected card, fire `action`.
+    /// Handles taps: if tapping a non-selected card, move selection by one toward it; 
+    /// if tapping the selected card, fire `action`.
     /// - Parameters:
     ///   - item: The tapped item.
     ///   - index: The index of the tapped item.
