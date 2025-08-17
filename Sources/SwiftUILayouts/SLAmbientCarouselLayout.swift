@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  SLAmbientCarouselLayout.swift
 //  SwiftUILayouts
 //
 //  Created by Aakarsh Verma on 17/08/25.
@@ -47,7 +47,7 @@ import SwiftUI
 /// - Important: Requires **iOS 18** because it relies on
 ///   `onScrollGeometryChange`. For earlier OS versions you can wrap the view
 @available(iOS 18.0, *)
-public struct AmbientCarouselView<Data: RandomAccessCollection, Content: View, BackdropContent: View>: View where Data.Element: Identifiable & SLImageModel {
+public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: View, BackdropContent: View>: View where Data.Element: Identifiable & SLImageModel {
     /// Visual & behavioural parameters supplied via protocol for easy theming.
     let config: any SLAmbientCarouselProtocol
     /// The collection of items displayed by the carousel.
