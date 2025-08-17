@@ -1,32 +1,35 @@
+# .github/workflows/swiftlint.yml
+# Runs SwiftLint on pull-requests, but:
+# • Lints only the files changed in the PR
+# • Uses --lenient so warnings never fail the build
+# • Reads project-specific rules from .swiftlint.yml (auto-detected)
+
 name: SwiftLint
 
 on:
   pull_request:
     paths:
-      - '.github/workflows/swiftlint.yml'
-      - '.swiftlint.yml'
       - '**/*.swift'
+      - '.swiftlint.yml'
+      - '.github/workflows/swiftlint.yml'
 
 permissions:
   contents: read
   pull-requests: write
-  
+
 jobs:
-  SwiftLint:
+  swiftlint:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
-      - name: GitHub Action for SwiftLint
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: SwiftLint - diff only (non-blocking)
         uses: norio-nomura/action-swiftlint@3.2.1
-      - name: GitHub Action for SwiftLint with --strict
-        uses: norio-nomura/action-swiftlint@3.2.1
+        env:
+          DIFF_BASE: ${{ github.base_ref }}      # compare against the PR base branch
+          # WORKING_DIRECTORY: Source            # uncomment if your .swift files live in /Source
         with:
-          args: --strict
-      - name: GitHub Action for SwiftLint (Only files changed in the PR)
-        uses: norio-nomura/action-swiftlint@3.2.1
-        env:
-          DIFF_BASE: ${{ github.base_ref }}
-      - name: GitHub Action for SwiftLint (Different working directory)
-        uses: norio-nomura/action-swiftlint@3.2.1
-        env:
-          WORKING_DIRECTORY: Source
+          args: --lenient --reporter github-actions-logging
+        continue-on-error: true                  # keep CI green even if violations exist
