@@ -8,13 +8,13 @@
 import SwiftUI
 
 
-// MARK: - SLStackCarouselModel
+// MARK: - SLStackCarouselProtocol
 
 
 /// A configuration protocol for `SLStackCarouselLayout`.
 /// Defines how cards are sized, spaced, layered, and whether selection is highlighted.
 /// Conform to this protocol to tune the visual behavior of the stacked carousel.
-public protocol SLStackCarouselModel {
+public protocol SLStackCarouselProtocol {
     /// Portion of the container width used for each card's width.
     /// Example: `0.75` means each card is 75% of the available width.
     var cardWidthRatio: CGFloat { get }
@@ -37,7 +37,7 @@ public protocol SLStackCarouselModel {
 
 /// Default helper methods for `StackCarouselConfigModel`.
 /// Provides computed presentation properties for a card based on its offset from the current index.
-extension SLStackCarouselModel {
+extension SLStackCarouselProtocol {
     /// Computes visual properties for a card in the stack given its distance from the selected card.
     /// - Parameters:
     ///   - offsetFromCurrent: Relative index distance from the currently selected card (0 for selected, negative for left, positive for right).
@@ -80,13 +80,13 @@ internal struct SLStackCarouselProps {
 }
 
 
-// MARK: - SLCoverCarouselModel
+// MARK: - SLCoverCarouselProtocol
 
 
 /// A configuration protocol for `SLCoverCarouselLayout`.
 /// Defines how cards are sized, spaced, layered, and whether selection is highlighted.
 /// Conform to this protocol to tune the visual behavior of the cover carousel.
-public protocol SLCoverCarouselModel {
+public protocol SLCoverCarouselProtocol {
     /// Enable translucent behaviour where carousel item have lesser opacity when further away from center item    
     var hasOpacity: Bool { get }
     
@@ -110,4 +110,52 @@ public protocol SLCoverCarouselModel {
     
     /// minimum width of carousel item
     var minimumCardWidth: CGFloat { get }
+}
+
+
+// MARK: - SLAmbientCarouselProtocol
+
+/// Describes all visual and layout parameters used by `AmbientCarouselView`.
+///
+/// Conforming types supply values (or computed values) for each property; the
+/// protocol ships with default values via an extension so you only override
+/// the ones you care about.
+///
+/// Typical usage:
+///
+/// ```
+/// struct DarkModeCarouselConfig: SLAmbientCarouselProtocol {
+///     let backgroundBlurDarkness: CGFloat = 0.6      // darker backdrop
+///     let itemSpacing:            CGFloat = 16        // wider spacing
+/// }
+///
+/// let view = AmbientCarouselView(
+///     config: DarkModeCarouselConfig(),
+///     items:  myImages
+/// ) { image in
+///     SLImageView(CustomImageModel(image: image.image))
+/// }
+/// ```
+@available(iOS 18.0, *)
+public protocol SLAmbientCarouselProtocol {
+    /// Amount of the backdrop (in points) kept *above* the visible carousel
+    /// for a smooth fade-out effect.
+    var visibleTopBlur: CGFloat { get }
+    
+    /// Amount of the backdrop (in points) kept *below* the visible carousel
+    /// for a smooth fade-out effect.
+    var visibleBottomBlur: CGFloat { get }
+    
+    /// The radius, in points, of the Gaussian blur applied to the backdrop.
+    var backgroundBlurRadius: CGFloat { get }
+    
+    /// The alpha-component (0 … 1) of a black overlay placed on top of the
+    /// blurred backdrop to darken it.
+    var backgroundBlurDarkness: CGFloat { get }
+    
+    /// Fixed height of the carousel itself.
+    var frameHeight: CGFloat { get }
+    
+    /// Horizontal spacing between consecutive carousel items.
+    var itemSpacing: CGFloat { get }
 }

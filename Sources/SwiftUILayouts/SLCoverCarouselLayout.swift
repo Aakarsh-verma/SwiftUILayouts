@@ -14,7 +14,7 @@ import SwiftUI
 ///   - Data: A `RandomAccessCollection` whose `Element` is `Identifiable`.
 public struct SLCoverCarouselLayout<Content: View, Data: RandomAccessCollection>: View where Data.Element: Identifiable {
     /// Model controlling card size, spacing and visual effects.
-    let config: SLCoverCarouselModel
+    let config: SLCoverCarouselProtocol
     /// Items to display.
     let data: Data
     /// Currently selected item ID (two-way binding to the caller).
@@ -22,7 +22,7 @@ public struct SLCoverCarouselLayout<Content: View, Data: RandomAccessCollection>
     /// Builder that turns each data element into a view.
     @ViewBuilder public var content: (Data.Element) -> Content
     
-    public init(config: SLCoverCarouselModel, 
+    public init(config: SLCoverCarouselProtocol, 
                 data: Data, 
                 selection: Binding<Data.Element.ID?>, 
                 content: @escaping (Data.Element) -> Content) {
@@ -61,7 +61,7 @@ public struct SLCoverCarouselLayout<Content: View, Data: RandomAccessCollection>
 private struct SLCoverCarouselCard<Item: Identifiable, Content: View>: View {
     
     let item: Item
-    let config: SLCoverCarouselModel
+    let config: SLCoverCarouselProtocol
     @ViewBuilder var content: () -> Content
     
     private var diffWidth: CGFloat { config.cardWidth - config.minimumCardWidth }
@@ -98,7 +98,7 @@ private struct SLCoverCarouselItemMetrics {
     let minX: CGFloat
     let size: CGSize
     let diffWidth: CGFloat
-    let config: SLCoverCarouselModel
+    let config: SLCoverCarouselProtocol
     
     // Derived values
     let progress: CGFloat
@@ -112,7 +112,7 @@ private struct SLCoverCarouselItemMetrics {
          cardWidth: CGFloat,
          spacing: CGFloat,
          diffWidth: CGFloat,
-         config: SLCoverCarouselModel) {
+         config: SLCoverCarouselProtocol) {
         
         self.minX = proxy.frame(in: .scrollView(axis: .horizontal)).minX
         self.size = proxy.size
