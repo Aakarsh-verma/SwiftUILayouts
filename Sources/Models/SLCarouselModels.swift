@@ -42,17 +42,40 @@ extension SLStackCarouselModel {
     /// - Parameters:
     ///   - offsetFromCurrent: Relative index distance from the currently selected card (0 for selected, negative for left, positive for right).
     ///   - totalItems: Total number of items in the carousel, used to compute layering (`zIndex`).
-    /// - Returns: A tuple of:
+    /// - Returns: A model of `SLStackCarouselProps` which contains:
     ///   - scale: The scale applied to the card (1 for the selected card, decreasing by `cardSizeDifferenceRatio` per step).
     ///   - xOffset: Horizontal offset computed as `offset * cardOffsetDifference`.
     ///   - zIndex: The stacking order (higher values appear above lower ones).
     ///   - opacity: `1` if within `visibleCardIndexDifference`, else `0`.
-    func getItemsProps(_ offsetFromCurrent: Int, totalItems: Int) -> (scale: CGFloat, xOffset: CGFloat, zIndex: Double, opacity: Double) {
+    func getItemsProps(_ offsetFromCurrent: Int, totalItems: Int) -> SLStackCarouselProps {
         let scale = offsetFromCurrent == 0 ? 1 : (1 - Double(abs(offsetFromCurrent)) * cardSizeDifferenceRatio)
         let xOffset = CGFloat(offsetFromCurrent) * cardOffsetDifference
         let zIndex = Double(totalItems - abs(offsetFromCurrent))
         let opacity = abs(offsetFromCurrent) <= Int(visibleCardIndexDifference) ? 1.0 : 0.0
-        return (scale, xOffset, zIndex, opacity)
+        return SLStackCarouselProps(scale, xOffset, zIndex, opacity)
+    }
+}
+
+/// helper model for `StackCarouselConfigModel`.
+/// Contains computed presentation properties for a card
+internal struct SLStackCarouselProps {
+    /// The scale applied to the card
+    let scale: CGFloat
+    /// Horizontal offset
+    let xOffset: CGFloat
+    /// The stacking order
+    let zIndex: Double
+    /// Is there even a need to explains? ; )
+    let opacity: CGFloat
+    /// Creates an `SLStackCarouselProps`.
+    init(_ scale: CGFloat, 
+         _ xOffset: CGFloat, 
+         _ zIndex: Double, 
+         _ opacity: CGFloat) {
+        self.scale = scale
+        self.xOffset = xOffset
+        self.zIndex = zIndex
+        self.opacity = opacity
     }
 }
 

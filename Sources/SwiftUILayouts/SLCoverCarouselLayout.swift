@@ -23,9 +23,9 @@ public struct SLCoverCarouselLayout<Content: View, Data: RandomAccessCollection>
     @ViewBuilder public var content: (Data.Element) -> Content
     
     public init(config: SLCoverCarouselModel, 
-         data: Data, 
-         selection: Binding<Data.Element.ID?>, 
-         content: @escaping (Data.Element) -> Content) {
+                data: Data, 
+                selection: Binding<Data.Element.ID?>, 
+                content: @escaping (Data.Element) -> Content) {
         self.config = config
         self.data = data
         self._selection = selection
@@ -35,7 +35,6 @@ public struct SLCoverCarouselLayout<Content: View, Data: RandomAccessCollection>
     public var body: some View {
         GeometryReader { rootProxy in
             let rootSize = rootProxy.size
-
             ScrollView(.horizontal) {
                 HStack(spacing: config.spacing) {
                     ForEach(data) { item in
@@ -60,13 +59,13 @@ public struct SLCoverCarouselLayout<Content: View, Data: RandomAccessCollection>
 
 /// Single card inside the carousel.
 private struct SLCoverCarouselCard<Item: Identifiable, Content: View>: View {
-
+    
     let item: Item
     let config: SLCoverCarouselModel
     @ViewBuilder var content: () -> Content
-
+    
     private var diffWidth: CGFloat { config.cardWidth - config.minimumCardWidth }
-
+    
     var body: some View {
         GeometryReader { proxy in
             let metrics = SLCoverCarouselItemMetrics(
@@ -76,7 +75,7 @@ private struct SLCoverCarouselCard<Item: Identifiable, Content: View>: View {
                 diffWidth: diffWidth,
                 config: config
             )
-
+            
             content()
                 .frame(width: proxy.size.width, height: proxy.size.height)          // original size
                 .frame(width: metrics.resizedWidth)      // dynamic resize
@@ -94,13 +93,13 @@ private struct SLCoverCarouselCard<Item: Identifiable, Content: View>: View {
 
 /// Pure-math helper that computes all geometry values for one item.
 private struct SLCoverCarouselItemMetrics {
-
+    
     // Inputs
     let minX: CGFloat
     let size: CGSize
     let diffWidth: CGFloat
     let config: SLCoverCarouselModel
-
+    
     // Derived values
     let progress: CGFloat
     let resizedWidth: CGFloat
@@ -108,39 +107,39 @@ private struct SLCoverCarouselItemMetrics {
     let opacity: CGFloat
     let totalOffset: CGFloat
     let maskHeight: CGFloat
-
+    
     init(proxy: GeometryProxy,
          cardWidth: CGFloat,
          spacing: CGFloat,
          diffWidth: CGFloat,
          config: SLCoverCarouselModel) {
-
+        
         self.minX = proxy.frame(in: .scrollView(axis: .horizontal)).minX
         self.size = proxy.size
         self.diffWidth = diffWidth
         self.config = config
-
+        
         // Scroll progress (−∞ … 1)
         progress = minX / (cardWidth + spacing)
-
+        
         // Width adjustment
         let reducingWidth = diffWidth * progress
         let cappedWidth   = min(diffWidth, reducingWidth)
         resizedWidth = size.width - (minX > 0 ? cappedWidth
-                                              : min(-cappedWidth, diffWidth))
-
+                                     : min(-cappedWidth, diffWidth))
+        
         // Visual effects
         let absProg = abs(progress)
         scale   = 1 - config.scaleValue   * absProg
         opacity = 1 - config.opacityValue * absProg
-
+        
         // Mask height (prevents bottom clipping on scale)
         maskHeight = config.hasScale ? (1 - config.scaleValue * absProg) * size.height
-                                     : size.height
-
+        : size.height
+        
         // Combine the three x-offsets from original code
         totalOffset = -reducingWidth
-                    + min(progress, 1) * diffWidth
-                    + max(-progress, 0) * diffWidth
+        + min(progress, 1) * diffWidth
+        + max(-progress, 0) * diffWidth
     }
 }
