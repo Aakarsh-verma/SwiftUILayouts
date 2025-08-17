@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A horizontally scrolling cover-style carousel with optional scale/opacity effects.
+/// A horizontally scrolling cover-style carousel with optional scale/opacity effects, within a given frame height
 ///
 /// - Parameters:
 ///   - Content: The SwiftUI view built for each data element.

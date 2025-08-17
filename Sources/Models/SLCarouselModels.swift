@@ -102,9 +102,6 @@ public protocol SLCoverCarouselModel {
     /// normal width of carousel item
     var cardWidth: CGFloat { get }
     
-    /// normal height of carousel item
-    var cardHeight: CGFloat { get }
-    
     /// spacing between carousel item
     var spacing: CGFloat { get }
     
