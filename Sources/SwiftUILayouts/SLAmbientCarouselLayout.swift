@@ -71,12 +71,12 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
     }
 
     public var body: some View {
-        CarouselView()
+        carouselView()
     }
     
     /// The main carousel with built-in paging & backdrop.
     @ViewBuilder
-    private func CarouselView() -> some View {
+    private func carouselView() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: config.itemSpacing) {
                 ForEach(Array(items.enumerated()), id: \.1.id) { index, item in
@@ -86,7 +86,7 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
             .scrollTargetLayout()
         }
         .frame(height: config.frameHeight)
-        .background(BackDropCarouselView())
+        .background(backDropCarouselView())
         .scrollTargetBehavior(.viewAligned(limitBehavior: .always))
         .onScrollGeometryChange(for: CGFloat.self) {
             let offsetX = $0.contentOffset.x + $0.contentInsets.leading
@@ -101,7 +101,7 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
     }
     
     @ViewBuilder
-    private func BackDropCarouselView() -> some View {
+    private func backDropCarouselView() -> some View {
         GeometryReader {
             let size = $0.size
             let array = Array(items)

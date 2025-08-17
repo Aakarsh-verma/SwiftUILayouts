@@ -159,3 +159,35 @@ public protocol SLAmbientCarouselProtocol {
     /// Horizontal spacing between consecutive carousel items.
     var itemSpacing: CGFloat { get }
 }
+
+
+// MARK: - SLParallaxCarouselProtocol
+/// Describes all tunable parameters used by `SLParallaxCarouselLayout`.
+///
+/// Conform with either a *value-type* configuration:
+///
+/// ```
+/// struct DarkThemeParallaxConfig: SLParallaxCarouselProtocol {
+///     let backgroundBlurDarkness: CGFloat = 0.6
+///     let itemSpacing:            CGFloat = 12
+/// }
+/// ```
+///
+public protocol SLParallaxCarouselProtocol {
+    /// Horizontal gap between cards.
+    var itemSpacing: CGFloat { get }
+
+    /// Extra scale applied to the *image inside* each card to give room for the
+    /// parallax reveal.
+    var parallaxScale: CGFloat { get }
+
+    /// Corner radius of the clipped card.
+    var cornerRadius: CGFloat { get }
+
+    /// Scale applied to non-centred cards during interactive scrolling.
+    var nonCenterItemScale: CGFloat { get }
+
+    /// Fixed height of the carousel view.
+    var frameHeight: CGFloat { get }
+}
+
