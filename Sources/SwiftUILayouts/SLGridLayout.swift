@@ -17,7 +17,6 @@ import SwiftUI
 ///   - Control item width with `itemSizeRatio` relative to `containerSize`.
 ///   - Switch orientation with `isVertical`.
 ///   - Handle taps via the optional `action` closure.
-@available(iOS 15.0, *)
 public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
     /// The source collection of items to be displayed in the grid.
     /// Must be a `RandomAccessCollection` whose elements are `Identifiable`.
