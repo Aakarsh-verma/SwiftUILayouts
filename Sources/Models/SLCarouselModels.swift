@@ -1,11 +1,15 @@
 //
-//  SLStackCarouselModel.swift
+//  SLCarouselModels.swift
 //  SwiftUILayouts
 //
 //  Created by Aakarsh Verma on 16/08/25.
 //
 
 import SwiftUI
+
+
+// MARK: - SLStackCarouselModel
+
 
 /// A configuration protocol for `SLStackCarouselLayout`.
 /// Defines how cards are sized, spaced, layered, and whether selection is highlighted.
@@ -50,4 +54,40 @@ extension SLStackCarouselModel {
         let opacity = abs(offsetFromCurrent) <= Int(visibleCardIndexDifference) ? 1.0 : 0.0
         return (scale, xOffset, zIndex, opacity)
     }
+}
+
+
+// MARK: - SLCoverCarouselModel
+
+
+/// A configuration protocol for `SLCoverCarouselLayout`.
+/// Defines how cards are sized, spaced, layered, and whether selection is highlighted.
+/// Conform to this protocol to tune the visual behavior of the cover carousel.
+public protocol SLCoverCarouselModel {
+    /// Enable translucent behaviour where carousel item have lesser opacity when further away from center item    
+    var hasOpacity: Bool { get }
+    
+    /// opacity multiplier based on how much further away certain items are from center item   
+    var opacityValue: CGFloat { get }
+    
+    /// Enable the scaling difference where carousel item have lesser size when further away from center item
+    var hasScale: Bool { get }
+    
+    /// scaling multiplier based on how much further away certain items are from center item   
+    var scaleValue: CGFloat { get }
+    
+    /// normal width of carousel item
+    var cardWidth: CGFloat { get }
+    
+    /// normal height of carousel item
+    var cardHeight: CGFloat { get }
+    
+    /// spacing between carousel item
+    var spacing: CGFloat { get }
+    
+    /// corner radius of carousel item
+    var cornerRadius: CGFloat { get }
+    
+    /// minimum width of carousel item
+    var minimumCardWidth: CGFloat { get }
 }

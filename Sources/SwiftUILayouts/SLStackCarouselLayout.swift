@@ -15,7 +15,6 @@ import SwiftUI
 /// - Generic Parameters:
 ///   - `Data`: A `RandomAccessCollection` of identifiable items.
 ///   - `Content`: The SwiftUI view generated for each item via `content`.
-@available(iOS 15.0, *)
 public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
     /// The data source for the carousel, rendered in stacking order.
     let items: Data
