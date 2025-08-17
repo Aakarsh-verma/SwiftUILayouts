@@ -35,9 +35,9 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
     ///   - currentIndex: index of the item which is in focus then maintains bind to track the same
     ///   - content: A closure that builds the view for each item.
     ///   - action: Optional tap handler receiving the tapped item.
-    public init(items: Data, 
-                config: SLStackCarouselModel, 
-                currentIndex: Binding<Int>, 
+    public init(items: Data,
+                config: SLStackCarouselModel,
+                currentIndex: Binding<Int>,
                 content: @escaping (Data.Element) -> Content,
                 action: ((Data.Element) -> Void)? = nil) {
         self.items = items
@@ -50,7 +50,6 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
     public var body: some View {
         GeometryReader { proxy in
             let cardWidth: CGFloat = proxy.size.width * config.cardWidthRatio
-
             VStack {
                 ZStack {
                     ForEach(Array(items.enumerated()), id: \.1.id) { index, item in
