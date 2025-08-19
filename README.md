@@ -137,4 +137,4 @@ If you’d like to fix bugs or add new features:
 ## License
 
 This project is licensed under the **MIT License**.  
-See [LICENSE](LICENSE) for details.  
+See [LICENSE](https://choosealicense.com/licenses/mit/) for details.  
