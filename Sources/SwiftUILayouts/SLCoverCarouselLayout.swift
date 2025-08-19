@@ -14,13 +14,13 @@ import SwiftUI
 ///   - Data: A `RandomAccessCollection` whose `Element` is `Identifiable`.
 public struct SLCoverCarouselLayout<Content: View, Data: RandomAccessCollection>: View where Data.Element: Identifiable {
     /// Model controlling card size, spacing and visual effects.
-    let config: SLCoverCarouselProtocol
+    private let config: SLCoverCarouselProtocol
     /// Items to display.
-    let data: Data
+    private let data: Data
     /// Currently selected item ID (two-way binding to the caller).
-    @Binding public var selection: Data.Element.ID?
+    @Binding private var selection: Data.Element.ID?
     /// Builder that turns each data element into a view.
-    @ViewBuilder public var content: (Data.Element) -> Content
+    @ViewBuilder private var content: (Data.Element) -> Content
     
     public init(config: SLCoverCarouselProtocol, 
                 data: Data, 
@@ -33,6 +33,11 @@ public struct SLCoverCarouselLayout<Content: View, Data: RandomAccessCollection>
     }
     
     public var body: some View {
+        carouselView()
+    }
+    
+    @ViewBuilder
+    private func carouselView() -> some View {
         GeometryReader { rootProxy in
             let rootSize = rootProxy.size
             ScrollView(.horizontal) {

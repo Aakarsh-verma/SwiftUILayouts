@@ -49,13 +49,13 @@ import SwiftUI
 @available(iOS 18.0, *)
 public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: View, BackdropContent: View>: View where Data.Element: Identifiable & SLImageModel {
     /// Visual & behavioural parameters supplied via protocol for easy theming.
-    let config: any SLAmbientCarouselProtocol
+    private let config: any SLAmbientCarouselProtocol
     /// The collection of items displayed by the carousel.
-    let items:  Data
+    private let items:  Data
     /// Foreground (front-most) cell builder.
-    let content: (Data.Element) -> Content
+    private let content: (Data.Element) -> Content
     /// Blurred backdrop cell builder.
-    let backdropContent: (Data.Element) -> BackdropContent
+    private let backdropContent: (Data.Element) -> BackdropContent
     /// Horizontal progress of the items in scroll view 0 … n-1
     @State private var scrollProgressX: CGFloat = 0
     
@@ -69,7 +69,7 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
         self.content = content
         self.backdropContent = backdropContent
     }
-
+    
     public var body: some View {
         carouselView()
     }
@@ -97,7 +97,7 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
             let maxValue = CGFloat(items.count - 1)
             scrollProgressX = min(max(newValue, 0), maxValue) * CGFloat(items.count)
         }
-
+        
     }
     
     @ViewBuilder

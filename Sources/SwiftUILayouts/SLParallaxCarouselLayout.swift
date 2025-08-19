@@ -66,6 +66,13 @@ public struct SLParallaxCarouselLayout<Data: RandomAccessCollection, Content: Vi
     }
     
     public var body: some View {
+        carouselView()
+            .frame(height: config.frameHeight)
+            .padding(.top, 10)
+    }
+    
+    @ViewBuilder 
+    private func carouselView() -> some View {
         GeometryReader { geometry in
             let size = geometry.size
             let smallerScale: CGFloat = config.nonCenterItemScale
@@ -97,10 +104,7 @@ public struct SLParallaxCarouselLayout<Data: RandomAccessCollection, Content: Vi
             }
             .scrollTargetBehavior(.viewAligned)
         }
-        .frame(height: config.frameHeight)
-        .padding(.top, 10)
     }
-    
     
     /// Calculates how far the inner content must shift to create parallax.
     /// - Returns: A positive value that is subtracted from the content’s `x`

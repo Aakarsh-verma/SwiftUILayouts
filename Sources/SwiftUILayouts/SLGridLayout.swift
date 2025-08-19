@@ -20,26 +20,26 @@ import SwiftUI
 public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
     /// The source collection of items to be displayed in the grid.
     /// Must be a `RandomAccessCollection` whose elements are `Identifiable`.
-    public let items: Data
+    private let items: Data
     /// The base container width used to derive individual item width.
     /// Defaults to the device screen width if not provided.
-    let containerSize: CGFloat    
+    private let containerSize: CGFloat    
     /// The fraction of `containerSize` used as the item width.
     /// Example: `0.45` means each item is `45%` of the container width.
-    let itemSizeRatio: CGFloat
+    private let itemSizeRatio: CGFloat
     /// The underlying grid specification used by `LazyVGrid`/`LazyHGrid`.
     /// Built from `numberOfLayout` as an array of `.flexible()` grid items.
-    let layout: [GridItem]
+    private let layout: [GridItem]
     /// Controls grid orientation.
     /// - `true`: Uses `LazyVGrid` (vertical scrolling).
     /// - `false`: Uses `LazyHGrid` within a horizontal `ScrollView`.
-    let isVertical: Bool 
+    private let isVertical: Bool 
     /// A builder closure that produces the view for a given item.
     /// Called for each element in `items` to render cell content.
-    public var content: (Data.Element) -> Content
+    private var content: (Data.Element) -> Content
     /// Optional tap handler receiving the tapped item.
     /// Called for each element in `items` to handle cell's tap action.
-    public var action: ((Data.Element) -> Void)?
+    private var action: ((Data.Element) -> Void)?
     /// Creates an `SLGridLayout`.
     /// - Parameters:
     ///   - items: The collection of items to render.
@@ -50,12 +50,12 @@ public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View wh
     ///   - content: A closure that builds the view for each item.
     ///   - action: Optional tap handler receiving the tapped item.
     public init(items: Data,
-         numberOfLayout: Int = 2,
-         itemSizeRatio: CGFloat = 0.65,
-         isVertical: Bool = true,
-         containerSize: CGFloat? = nil,
-         content: @escaping (Data.Element) -> Content, 
-         action: ((Data.Element) -> Void)? = nil) {
+                numberOfLayout: Int = 2,
+                itemSizeRatio: CGFloat = 0.65,
+                isVertical: Bool = true,
+                containerSize: CGFloat? = nil,
+                content: @escaping (Data.Element) -> Content, 
+                action: ((Data.Element) -> Void)? = nil) {
         self.items = items
         self.itemSizeRatio = itemSizeRatio
         self.layout = Array(repeating: GridItem(.flexible()), count: numberOfLayout)
@@ -68,6 +68,11 @@ public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View wh
     /// Renders the grid using either `LazyVGrid` (vertical) or `LazyHGrid` (horizontal),
     /// computing each item's width as `containerSize * itemSizeRatio`.
     public var body: some View {
+        layoutView()
+    }
+    
+    @ViewBuilder 
+    private func layoutView() -> some View {
         VStack {
             let cardWidth: CGFloat = containerSize * itemSizeRatio
             
@@ -76,13 +81,10 @@ public struct SLGridLayout<Data: RandomAccessCollection, Content: View>: View wh
                     gridLayout(cardWidth: cardWidth)                
                 }
             } else {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHGrid(rows: layout, spacing: 12) { 
-                        gridLayout(cardWidth: cardWidth)
-                    }
+                LazyHGrid(rows: layout, spacing: 12) { 
+                    gridLayout(cardWidth: cardWidth)
                 }
             }
-            
         }
     }
     
