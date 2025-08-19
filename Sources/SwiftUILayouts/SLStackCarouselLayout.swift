@@ -17,17 +17,17 @@ import SwiftUI
 ///   - `Content`: The SwiftUI view generated for each item via `content`.
 public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
     /// The data source for the carousel, rendered in stacking order.
-    let items: Data
+    private let items: Data
     /// Visual and interaction configuration for widths, spacing, scaling, and visibility.
-    let config: SLStackCarouselProtocol
+    private let config: SLStackCarouselProtocol
     /// The index of the currently centered (selected) card.
     /// Updates as the user swipes or taps other cards.
-    @Binding var currentIndex: Int
+    @Binding private var currentIndex: Int
     /// Builder that produces the view for each item.
-    let content: (Data.Element) -> Content
+    private let content: (Data.Element) -> Content
     /// Callback executed when the currently selected card is tapped.
     /// If a non-selected card is tapped, the carousel first animates towards it instead of firing this action.
-    let action: ((Data.Element) -> Void)?
+    private let action: ((Data.Element) -> Void)?
     /// Creates an `SLStackCarouselLayout`.
     /// - Parameters:
     ///   - items: The collection of items to render.
@@ -48,6 +48,11 @@ public struct SLStackCarouselLayout<Data: RandomAccessCollection, Content: View>
     }
     
     public var body: some View {
+        carouselView()
+    }
+    
+    @ViewBuilder 
+    private func carouselView() -> some View {
         GeometryReader { proxy in
             let cardWidth: CGFloat = proxy.size.width * config.cardWidthRatio
             VStack {
