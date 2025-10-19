@@ -49,7 +49,7 @@ extension View {
  - Parameters:
     - Content: The original SwiftUI view being magnified or panned.
  */
-fileprivate struct PinchZoomHelper<Content: View>: View {
+private struct PinchZoomHelper<Content: View>: View {
     @ViewBuilder var content: Content
     @State private var config: ZoomConfig = .init()
     @State private var zoom: CGFloat = 1
@@ -77,7 +77,7 @@ fileprivate struct PinchZoomHelper<Content: View>: View {
 
      - Parameter isActive: A Boolean indicating if the gesture is currently active.
      */
-    fileprivate func handleGestureStateChange(_ isActive: Bool) {
+    private func handleGestureStateChange(_ isActive: Bool) {
         if isActive {
             anchor = config.anchor
         } else {
@@ -86,7 +86,7 @@ fileprivate struct PinchZoomHelper<Content: View>: View {
     }
 
     /// Resets the zoom and pan state to default using a snappy animation.
-    fileprivate func resetZoomState() {
+    private func resetZoomState() {
         withAnimation(.snappy(duration: 0.2, extraBounce: 0), completionCriteria: .logicallyComplete) {
             dragOffset = .zero
             zoom = 1
@@ -98,7 +98,7 @@ fileprivate struct PinchZoomHelper<Content: View>: View {
     /**
      Updates zoom and pan properties based on gesture configuration changes.
      */
-    fileprivate func handleZoomingAndPanning() {
+    private func handleZoomingAndPanning() {
         guard config.isActive else { return }
         let isScaleChanged = abs(zoom - config.zoom) > 0.01
         let isPanChangedX = abs(dragOffset.width - config.dragOffset.width) > 5.0
@@ -124,7 +124,7 @@ fileprivate struct PinchZoomHelper<Content: View>: View {
     - anchor: The anchor point for the scale effect in normalized coordinates.
     - dragOffset: The offset applied when panning with two fingers.
  */
-fileprivate struct ZoomConfig: Equatable {
+private struct ZoomConfig: Equatable {
     var isActive: Bool = false
     var zoom: CGFloat = 1
     var anchor: UnitPoint = .center
@@ -141,7 +141,7 @@ fileprivate struct ZoomConfig: Equatable {
 
  The configuration state is continuously updated via its `@Binding` property.
  */
-fileprivate struct GestureOverlay: UIViewRepresentable {
+private struct GestureOverlay: UIViewRepresentable {
     @Binding var config: ZoomConfig
 
     func makeCoordinator() -> Coordnator {
