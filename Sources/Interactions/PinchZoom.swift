@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - View Extension
 
-extension View {
+public extension View {
 
     /**
      Applies a pinch-to-zoom and two-finger pan gesture to the current view.
@@ -29,7 +29,7 @@ extension View {
      - Returns: A view wrapped with simultaneous pinch and pan gesture handling.
      */
     @ViewBuilder
-    func pinchZoom() -> some View {
+    public func pinchZoom() -> some View {
         PinchZoomHelper {
             self
         }
