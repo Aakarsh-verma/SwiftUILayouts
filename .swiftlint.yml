@@ -12,7 +12,6 @@ opt_in_rules:
   - struct_body_length
   - empty_count
   - missing_docs
-  - implicit_return
   - unneeded_break_in_switch
   - sorted_imports
   - closure_end_indentation
