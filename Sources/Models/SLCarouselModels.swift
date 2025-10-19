@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-
 // MARK: - SLStackCarouselProtocol
-
 
 /// A configuration protocol for `SLStackCarouselLayout`.
 /// Defines how cards are sized, spaced, layered, and whether selection is highlighted.
@@ -79,9 +77,7 @@ internal struct SLStackCarouselProps {
     }
 }
 
-
 // MARK: - SLCoverCarouselProtocol
-
 
 /// A configuration protocol for `SLCoverCarouselLayout`.
 /// Defines how cards are sized, spaced, layered, and whether selection is highlighted.
@@ -111,7 +107,6 @@ public protocol SLCoverCarouselProtocol {
     /// minimum width of carousel item
     var minimumCardWidth: CGFloat { get }
 }
-
 
 // MARK: - SLAmbientCarouselProtocol
 
@@ -160,7 +155,6 @@ public protocol SLAmbientCarouselProtocol {
     var itemSpacing: CGFloat { get }
 }
 
-
 // MARK: - SLParallaxCarouselProtocol
 /// Describes all tunable parameters used by `SLParallaxCarouselLayout`.
 ///
@@ -190,4 +184,3 @@ public protocol SLParallaxCarouselProtocol {
     /// Fixed height of the carousel view.
     var frameHeight: CGFloat { get }
 }
-
