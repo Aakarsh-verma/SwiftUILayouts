@@ -9,16 +9,19 @@ disabled_rules:
   - inclusive_language
 
 opt_in_rules:
-  - accessibility_label_for_image
-  - accessibility_trait_for_button
+  - struct_body_length
   - empty_count
-  - explicit_self
   - missing_docs
   - implicit_return
   - unneeded_break_in_switch
   - sorted_imports
-  - unused_import
   - closure_end_indentation
+  - closure_spacing
+  - unused_closure_parameter
+
+analyzer_rules:
+  - explicit_self
+  - unused_import
 
 included:
   - Sources
@@ -57,6 +60,7 @@ explicit_return:
   severity: warning
 
 closure_spacing:
+  max_space: 1
   warning: true
 
 # SwiftUI-specific view struct balance
