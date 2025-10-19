@@ -1,0 +1,69 @@
+# SwiftUI-Optimized SwiftLint Configuration
+# Focused on readability, body complexity control, and accessibility compliance
+
+disabled_rules:
+  - trailing_whitespace
+  - line_length
+  - type_body_length
+  - file_length
+  - inclusive_language
+
+opt_in_rules:
+  - accessibility_label_for_image
+  - accessibility_trait_for_button
+  - empty_count
+  - explicit_self
+  - missing_docs
+  - implicit_return
+  - unneeded_break_in_switch
+  - sorted_imports
+  - unused_import
+  - closure_end_indentation
+
+included:
+  - Sources
+  - SwiftUILayouts
+  - SwiftUILayoutsTests
+
+excluded:
+  - Carthage
+  - Pods
+  - Generated
+
+# Custom Rule Configurations
+identifier_name:
+  min_length: 2
+  excluded:
+    - id
+    - vm
+    - ui
+    - x
+    - y
+
+function_body_length:
+  warning: 80
+  error: 150
+
+type_name:
+  min_length: 3
+  max_length: 50
+  excluded:
+    - UI
+    - VM
+    - ID
+
+# Encourage SwiftUI readability and implicit syntax patterns
+explicit_return:
+  severity: warning
+
+closure_spacing:
+  warning: true
+
+# SwiftUI-specific view struct balance
+struct_body_length:
+  warning: 200
+  error: 400
+
+# Enforce accessibility
+accessibility_label_for_image: warning
+accessibility_trait_for_button: warning
