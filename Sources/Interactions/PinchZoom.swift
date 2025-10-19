@@ -63,10 +63,10 @@ private struct PinchZoomHelper<Content: View>: View {
             .overlay(GestureOverlay(config: $config))
             .overlay {
                 Color.clear
-                    .onChange(of: config.isActive) { oldValue, newValue in
+                    .onChange(of: config.isActive) { _, newValue in
                         handleGestureStateChange(newValue)
                     }
-                    .onChange(of: config) { oldValue, newValue in
+                    .onChange(of: config) { _, _ in
                         handleZoomingAndPanning()
                     }
             }
