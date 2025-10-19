@@ -79,7 +79,7 @@ public struct SLParallaxCarouselLayout<Data: RandomAccessCollection, Content: Vi
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: config.itemSpacing) {
-                    ForEach(Array(items.enumerated()), id: \.1.id) { index, trip in
+                    ForEach(Array(items.enumerated()), id: \.1.id) { _, trip in
                         GeometryReader { proxy in
                             let cardSize = proxy.size
                             let minX = parallaxOffset(proxy: proxy, cardSize: cardSize)

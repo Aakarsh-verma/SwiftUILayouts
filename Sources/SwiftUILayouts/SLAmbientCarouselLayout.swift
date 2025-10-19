@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 // MARK: - AmbientCarouselView
 
 /// A horizontally-scrolling **cover-flow style** carousel that renders a crisp
@@ -51,7 +50,7 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
     /// Visual & behavioural parameters supplied via protocol for easy theming.
     private let config: any SLAmbientCarouselProtocol
     /// The collection of items displayed by the carousel.
-    private let items:  Data
+    private let items: Data
     /// Foreground (front-most) cell builder.
     private let content: (Data.Element) -> Content
     /// Blurred backdrop cell builder.
@@ -61,7 +60,7 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
     
     // MARK: Initialiser
     public init(config: some SLAmbientCarouselProtocol,
-                items:  Data,
+                items: Data,
                 content: @escaping (Data.Element) -> Content,
                 backdropContent: @escaping (Data.Element) -> BackdropContent) {
         self.config = config
@@ -79,7 +78,7 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
     private func carouselView() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: config.itemSpacing) {
-                ForEach(Array(items.enumerated()), id: \.1.id) { index, item in
+                ForEach(Array(items.enumerated()), id: \.1.id) { _, item in
                     content(item)
                 }
             }
@@ -93,7 +92,7 @@ public struct SLAmbientCarouselLayout<Data: RandomAccessCollection, Content: Vie
             let width = $0.contentSize.width + config.itemSpacing
             
             return offsetX / width
-        } action: { oldValue, newValue in
+        } action: { _, newValue in
             let maxValue = CGFloat(items.count - 1)
             scrollProgressX = min(max(newValue, 0), maxValue) * CGFloat(items.count)
         }

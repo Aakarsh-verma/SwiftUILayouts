@@ -5,8 +5,8 @@
 //  Created by Aakarsh Verma on 15/08/25.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 /// A SwiftUI view that displays an image based on a provided `SLImageModel`.
 /// - Supports rendering images from three possible sources:
