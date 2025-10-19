@@ -17,6 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: SwiftLint (Complete)
+        uses: norio-nomura/action-swiftlint@3.2.1
+
       - name: Install SwiftLint (latest stable)
         run: brew install swiftlint
 
@@ -26,7 +29,5 @@ jobs:
       - name: SwiftLint Auto-Correct (Optional)
         run: swiftlint autocorrect --format
 
-      - name: SwiftLint (Changed Files)
-        uses: norio-nomura/action-swiftlint@3.2.1
         env:
           DIFF_BASE: ${{ github.base_ref }}
