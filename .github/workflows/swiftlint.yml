@@ -20,9 +20,6 @@ jobs:
       - name: SwiftLint (Complete)
         uses: norio-nomura/action-swiftlint@3.2.1
 
-      - name: Install SwiftLint (latest stable)
-        run: brew install swiftlint
-
       - name: Run SwiftLint for SwiftUI Source
         run: swiftlint lint --strict
 
