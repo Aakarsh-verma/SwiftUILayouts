@@ -103,15 +103,16 @@ struct ConfiguredCarousel: View {
 SwiftUILayouts/
 ├── Package.swift
 ├── Sources/
-│   └── SwiftUILayouts/
-│       ├── Models/
-│       ├── Views/
-│       └── Utilities/
+│   ├──Interactions/
+│   ├── Models/
+│   ├── SwiftUILayouts/
+│   ├── Views/
+|       └──Components/
 └── Tests/
     └── SwiftUILayoutsTests/
 ```
 
-- **Sources/SwiftUILayouts** – Core components and layouts.  
+- **Sources/** – Core components and layouts.  
 - **Tests/SwiftUILayoutsTests** – Unit tests for reliability.  
 
 ---
