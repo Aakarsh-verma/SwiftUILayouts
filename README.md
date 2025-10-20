@@ -4,13 +4,13 @@ SwiftUILayouts is a Swift Package providing a collection of reusable SwiftUI lay
 
 ---
 
-## Features
+## Highlights
 
 - 📐 **Reusable Layouts** – Predefined SwiftUI layouts for carousels, grids, and cards.  
 - 🎨 **Customizable Components** – Highly flexible with configuration models.  
 - 🖼️ **Image Handling** – Supports remote and local images via Kingfisher.  
 - 🚀 **Swift Package Manager (SPM)** – Easy integration into your project.  
-- ✅ **Unit Tests Included** – Ensures reliability and easy extension.  
+- ✅ **Unit Tests Included** – Ensures reliability and easy extension. (TBA🥲)
 
 ---
 
@@ -34,6 +34,7 @@ In Xcode:
    ```bash
    https://github.com/your-username/SwiftUILayouts.git
    ```
+
 3. Select the latest version and add the package to your project.
 
 ---
@@ -99,19 +100,20 @@ struct ConfiguredCarousel: View {
 
 ## Project Structure
 
-```
+```code
 SwiftUILayouts/
 ├── Package.swift
 ├── Sources/
-│   └── SwiftUILayouts/
-│       ├── Models/
-│       ├── Views/
-│       └── Utilities/
+│   ├──Interactions/
+│   ├── Models/
+│   ├── SwiftUILayouts/
+│   ├── Views/
+|       └──Components/
 └── Tests/
     └── SwiftUILayoutsTests/
 ```
 
-- **Sources/SwiftUILayouts** – Core components and layouts.  
+- **Sources/** – Core components and layouts.  
 - **Tests/SwiftUILayoutsTests** – Unit tests for reliability.  
 
 ---
@@ -121,6 +123,24 @@ SwiftUILayouts/
 - [Kingfisher](https://github.com/onevcat/Kingfisher) – A powerful Swift library for downloading and caching images from the web.
 
 ---
+
+## Features Index [Screen shots TBA]
+
+### Layouts
+
+1. Ambient Carousel Layout
+2. Cover Carousel Layout
+3. Grid Layout
+4. Parallax Carousel Layout
+5. Stack Carousel Layout
+
+### Interactions
+
+1. Pinch Pan Zoom
+
+### Components
+
+1. Image View
 
 ## Contributing
 
