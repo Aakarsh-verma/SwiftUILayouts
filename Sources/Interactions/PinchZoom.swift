@@ -29,7 +29,7 @@ public extension View {
      - Returns: A view wrapped with simultaneous pinch and pan gesture handling.
      */
     @ViewBuilder
-    public func pinchZoom() -> some View {
+    func pinchZoom() -> some View {
         PinchZoomHelper {
             self
         }
@@ -49,7 +49,7 @@ public extension View {
  - Parameters:
     - Content: The original SwiftUI view being magnified or panned.
  */
-private struct PinchZoomHelper<Content: View>: View {
+internal struct PinchZoomHelper<Content: View>: View {
     @ViewBuilder var content: Content
     @State private var config: ZoomConfig = .init()
     @State private var zoom: CGFloat = 1
@@ -124,7 +124,7 @@ private struct PinchZoomHelper<Content: View>: View {
     - anchor: The anchor point for the scale effect in normalized coordinates.
     - dragOffset: The offset applied when panning with two fingers.
  */
-private struct ZoomConfig: Equatable {
+internal struct ZoomConfig: Equatable {
     var isActive: Bool = false
     var zoom: CGFloat = 1
     var anchor: UnitPoint = .center
@@ -141,7 +141,7 @@ private struct ZoomConfig: Equatable {
 
  The configuration state is continuously updated via its `@Binding` property.
  */
-private struct GestureOverlay: UIViewRepresentable {
+internal struct GestureOverlay: UIViewRepresentable {
     @Binding var config: ZoomConfig
 
     func makeCoordinator() -> Coordnator {

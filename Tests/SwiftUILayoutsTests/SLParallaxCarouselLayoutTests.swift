@@ -69,7 +69,7 @@ final class SLParallaxCarouselLayoutTests: XCTestCase {
 
         let scroll = try sut.inspect().find(ViewType.ScrollView.self)
         let forEach = try scroll.find(ViewType.ForEach.self)
-        XCTAssertEqual(try forEach.count, items.count, "Should render one view per item")
+        XCTAssertEqual(forEach.count, items.count, "Should render one view per item")
     }
 
     func test_eachItemHasOverlay() throws {

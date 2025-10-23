@@ -76,7 +76,7 @@ final class SLGridLayoutTests: XCTestCase {
 
         // Count rendered cells via ForEach children
         // Descend into the grid's content and count Texts with our identifiers
-        let texts = try vgrid.findAll(ViewType.Text.self)
+        let texts = vgrid.findAll(ViewType.Text.self)
         // Only count our tagged cells (skip any incidental Texts)
         let count = try texts.filter { try $0.accessibilityIdentifier().hasPrefix("grid-cell-") == true }.count
         // If you don’t use "grid-cell-" in your titles, count all matching "grid-" instead:
@@ -94,7 +94,7 @@ final class SLGridLayoutTests: XCTestCase {
         // Ensure horizontal grid type is used
         let hgrid = try sut.inspect().find(ViewType.LazyHGrid.self)
 
-        let texts = try hgrid.findAll(ViewType.Text.self)
+        let texts = hgrid.findAll(ViewType.Text.self)
         let count = try texts.filter { try $0.accessibilityIdentifier().hasPrefix("grid-") == true }.count
         XCTAssertEqual(count, items.count, "Horizontal grid should render one cell per item")
     }
