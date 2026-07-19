@@ -13,7 +13,8 @@ let package = Package(
             targets: ["SwiftUILayouts"])
     ],
     dependencies: [
-        .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.0.0")
+        .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.0.0"),
+        .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -24,7 +25,10 @@ let package = Package(
             path: "Sources"),
         .testTarget(
             name: "SwiftUILayoutsTests",
-            dependencies: ["SwiftUILayouts"]
+            dependencies: [
+                "SwiftUILayouts",
+                .product(name: "ViewInspector", package: "ViewInspector")
+            ]
         )
     ]
 )
